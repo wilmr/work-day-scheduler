@@ -21,7 +21,22 @@ const timeStatus = () => {
 	}
 };
 
+const displayTasks = () => {
+	var tasks = localStorage.getItem('savedTasks');
+	if (tasks) {
+		savedTasks = JSON.parse(tasks);
+		console.log(savedTasks);
+	} else {
+		savedTasks = [];
+	}
+
+	for (var i = 0; i < savedTasks.length; i++) {
+		console.log($(savedTasks[i].hour));
+	}
+};
+
 timeStatus();
+displayTasks();
 
 $('.form-control').on('keyup', function () {
 	console.log(this);
@@ -38,7 +53,7 @@ $('.saveBtn').on('click', function () {
 	console.log(desc);
 	if (desc) {
 		var taskHour = $(this).attr('id');
-		savedTasks.push({ hour: taskHour, desctription: desc });
+		savedTasks.push({ hour: taskHour, description: desc });
 		localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
 	}
 });
