@@ -1,5 +1,5 @@
 var rightNow = moment().format('MMMM Do, YYYY');
-var rightNowHour = moment().format('hh A');
+var rightNowHour = moment().format('HH');
 var savedTasks = [];
 console.log(rightNowHour);
 
@@ -16,14 +16,16 @@ const timeStatus = () => {
 	for (var i = 0; i < textAreaEl.length; i++) {
 		// convert HTML inside span to a moment object
 		var blockStatus = $(textAreaEl[i]).find('span').text().trim();
-		var blockTime = moment(blockStatus, 'hh A').format('hh A');
-		//moment(blockTime, 'hh A').isBefore({ rightNowHour }, 'hh A')
+		var blockTime = moment(blockStatus, 'hh A').format('HH');
+		//
+		// moment(blockTime, 'hh A').isAfter({ rightNowHour }, 'hh A')
 		// compare block time to current time and assign color
-		if (blockTime < rightNow) {
+		console.log(blockTime);
+		if (blockTime < rightNowHour) {
 			$(textAreaEl[i]).find('textarea').addClass('bg-secondary');
 		} else if (blockTime === rightNowHour) {
 			$(textAreaEl[i]).find('textarea').addClass('bg-danger');
-		} else if (moment(blockTime, 'hh A').isAfter({ rightNowHour }, 'hh A')) {
+		} else if (blockTime > rightNowHour) {
 			$(textAreaEl[i]).find(`textarea`).addClass('bg-success');
 		}
 	}
