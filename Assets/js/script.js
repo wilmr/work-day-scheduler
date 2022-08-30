@@ -10,8 +10,8 @@ const timeStatus = () => {
 	for (var i = 0; i < textAreaEl.length; i++) {
 		var blockStatus = $(textAreaEl[i]).find('span').text().trim();
 		var blockTime = moment(blockStatus, 'hh A').format('hh A');
-		console.log(blockTime.valueOf());
-		if (moment(blockTime, 'hh A').isBefore({ rightNowHour }, 'hh A')) {
+		//moment(blockTime, 'hh A').isBefore({ rightNowHour }, 'hh A')
+		if (blockTime < rightNow) {
 			$(textAreaEl[i]).find('textarea').addClass('bg-secondary');
 		} else if (blockTime === rightNowHour) {
 			$(textAreaEl[i]).find('textarea').addClass('bg-danger');
@@ -26,12 +26,17 @@ const displayTasks = () => {
 	if (tasks) {
 		savedTasks = JSON.parse(tasks);
 		console.log(savedTasks);
-	} else {
-		savedTasks = [];
 	}
-
-	for (var i = 0; i < savedTasks.length; i++) {
-		console.log($(savedTasks[i].hour));
+	var localLength = savedTasks.length;
+	var textAreaEl = $('.input-group');
+	for (var i = 0; i < textAreaEl.length; i++) {
+		for (var j = 0; j < localLength; j++) {
+			var id = savedTasks[j].hour;
+			console.log(id);
+			if ($(textAreaEl[i]).find('.saveBtn').attr('id') === id) {
+				$(textAreaEl[i]).find('.form-control').val(savedTasks[j].description);
+			}
+		}
 	}
 };
 
